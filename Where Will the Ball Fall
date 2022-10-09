@@ -1,0 +1,31 @@
+public class Solution {
+    public int[] FindBall(int[][] grid) {
+        int[]res = new int[grid[0].Length];
+        for(int j=0;j<grid[0].Length;j++){
+                res[j] = dfs(grid,0,j);
+        }
+        return res;
+    }
+    
+    private int dfs(int[][] grid,int r,int c){
+        if(r == grid.Length){
+            return c;
+        }
+        if(!checker(grid,r,c))
+            return -1;
+        if(checker(grid,r,c+1) && grid[r][c]==1 && grid[r][c+1]==1){
+            return dfs(grid,r+1,c+1);
+        }
+        else if(checker(grid,r,c-1) && grid[r][c]==-1 && grid[r][c-1]==-1){
+            return dfs(grid,r+1,c-1);
+        }
+        return -1;
+    }
+    
+    private bool checker(int[][] grid,int r,int c){
+        if(r>=grid.Length || r<0 || c>=grid[r].Length || c<0)
+            return false;
+        return true;
+    }
+    
+}
