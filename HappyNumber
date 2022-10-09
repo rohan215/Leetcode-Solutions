@@ -1,0 +1,28 @@
+public class Solution {
+    //Floyd cycle algorithm
+    public bool IsHappy(int n) {
+        int slowNumber = n;
+        int fastNumber = nextNumberAfterSquaring(n);
+        while(slowNumber!=1 || fastNumber!=1){
+            if(slowNumber != 1 && slowNumber==fastNumber){
+                return false;
+            }
+            slowNumber = nextNumberAfterSquaring(slowNumber); //1 steps
+            fastNumber = nextNumberAfterSquaring(nextNumberAfterSquaring(fastNumber));   //2 steps
+        }
+        return true;
+    }
+    
+    //The idea if we need to square all the numbers individually.
+    //One way is to square them is by converting to string and then in a
+    //for loop. Another one is using % and /
+    private int nextNumberAfterSquaring(int n){
+        int square = 0;
+        while(n>0){
+            int oneNumber = n%10;
+            square += oneNumber*oneNumber;
+            n=n/10;
+        }
+        return square;
+    }
+}
