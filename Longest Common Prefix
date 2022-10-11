@@ -1,0 +1,54 @@
+public class Solution {
+    public string LongestCommonPrefix(string[] strs) {
+        if(strs.Length == 0)
+            return "";
+        Trie trie = new Trie();
+        foreach(string s in strs){
+            trie.Insert(s);
+        }
+        Node node = trie.head;
+        for(int i=0;i<strs[0].Length;i++){
+            char c = strs[0][i];
+            if(node.children[c-'a']!=null && node.children[c-'a'].size == strs.Length){
+                node = node.children[c-'a'];
+            }
+            else{
+                return strs[0].Substring(0,i);
+            }
+        }
+        return strs[0];
+           
+    }
+    
+    public class Node{
+        public char val;
+        public Node[] children = new Node[26];
+        public bool word = false;
+        public int size = 0;
+        public Node(char val){
+            this.val = val;
+        }
+        public Node(){
+            
+        }
+    }
+    
+    public class Trie{
+        public Node head;
+        public Trie(){
+            head = new Node();
+        }
+        public void Insert(String word){
+            Node node = head; //set the reference to top first
+            foreach(char c in word){
+                if(node.children[c-'a'] == null ){
+                    node.children[c-'a']= new Node(c);
+                    
+                }
+                node.children[c-'a'].size++;
+                node = node.children[c-'a'];
+            }
+            node.word = true;
+        }
+    }
+}
